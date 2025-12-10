@@ -883,10 +883,14 @@ export default function Home() {
                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-green/20 rounded-full blur-3xl"></div>
                  
                  {/* Floating Container */}
-                 <div className="w-32 h-32 bg-white rounded-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-gray-50 flex items-center justify-center p-6 animate-float relative z-10">
+                 <button 
+                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                   className="w-32 h-32 bg-white rounded-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-gray-50 flex items-center justify-center p-6 animate-float relative z-10 cursor-pointer hover:scale-105 transition-transform duration-300"
+                   aria-label="Voltar ao topo"
+                 >
                    {/* Original Icon (No Filters) */}
                    <img src={LOGO_ICON} alt="MF Icon" className="w-full h-full object-contain drop-shadow-sm" />
-                 </div>
+                 </button>
               </div>
             </div>
           </AnimatedBlock>
