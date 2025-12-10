@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scrolling for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F9FAFB;
+  color: #3F4D58;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #F3F4F6;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 5px;
+  border: 2px solid #F3F4F6;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6BAE2E; /* Brand Green on hover */
+}
+
+/* Utility for hiding scrollbar in sidebar but keeping functionality */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 20px;
+}
+
+/* =========================================
+   PRINT STYLES FOR PDF GENERATION
+   ========================================= */
+@media print {
+  @page {
+    margin: 1cm;
+    size: A4;
+  }
+
+  /* 1. RESET LAYOUT & HIDE UI */
+  body {
+    background-color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    overflow: visible !important;
+  }
+  
+  /* Hide Sidebar, Buttons, Navigation, Scrollbars */
+  aside, 
+  button, 
+  .no-print,
+  a[href^="https://fonts.google.com"],
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* 2. MAIN CONTAINER RESET */
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* 3. FORCE VISIBILITY OF ANIMATED ELEMENTS */
+  .opacity-0 { opacity: 1 !important; }
+  .translate-y-8 { transform: none !important; }
+  .scale-95 { transform: none !important; }
+  .blur-\[1px\] { filter: none !important; }
+  .will-change-transform { will-change: auto !important; }
+  
+  /* 4. LAYOUT FLOW & PAGE BREAKS */
+  
+  /* Sections */
+  section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 40px !important;
+    padding-top: 20px !important;
+    display: block !important;
+  }
+
+  /* Force Page Breaks before major sections */
+  section[id="logotipos"],
+  section[id="cores"],
+  section[id="guia-visual"],
+  section[id="tipografia"],
+  section[id="tom-de-voz"] {
+    break-before: page;
+    page-break-before: always;
+    margin-top: 0 !important;
+  }
+
+  /* Cards & Grids */
+  .grid {
+    display: grid !important;
+    break-inside: avoid;
+  }
+  
+  /* Prevent cards from splitting across pages */
+  .rounded-2xl, .rounded-xl, .rounded-3xl {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  /* Typography sizing for print */
+  h1 { font-size: 32pt !important; line-height: 1.2 !important; }
+  h2 { font-size: 24pt !important; margin-bottom: 20px !important; }
+  p { font-size: 11pt !important; color: #374151 !important; }
+
+  /* Color Cards Specific */
+  .h-32 { height: 80px !important; } /* Reduce height of color swatches to save space */
+  
+  /* Hide decorative elements that might clutter print */
+  .absolute.blur-3xl { display: none !important; }
+}

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { CheckCircle, XCircle, Download, Copy, Check } from 'lucide-react';
 import { ColorDefinition, LogoPlaceholderProps, ValueCardProps, ToneCardProps } from '../types';
