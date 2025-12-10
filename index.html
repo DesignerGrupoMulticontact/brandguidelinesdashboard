@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyFormula | Brand Guidelines</title>
+    
+    <!-- Preconnect for Image Assets optimization -->
+    <link rel="preconnect" href="https://i.postimg.cc" crossorigin>
+    <link rel="preconnect" href="https://image2url.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,600;1,400&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                blue: '#0872B1',
+                green: '#6BAE2E',
+                dark: '#3F4D58',
+                deep: '#426E4E',
+                gold: '#D6B66A',
+              },
+              neutral: {
+                50: '#F9FAFB',
+                100: '#F3F4F6',
+                200: '#E5E7EB',
+                300: '#D1D5DB',
+                800: '#1F2937',
+                900: '#111827',
+              }
+            },
+            fontFamily: {
+              primary: ['Poppins', 'sans-serif'],
+              secondary: ['Montserrat', 'sans-serif'],
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+              'card': '0 10px 30px -5px rgba(0, 0, 0, 0.03)',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Babel Standalone for in-browser JSX/TSX compilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Process Env Shim for Netlify API Key -->
+    <script>
+      window.process = {
+        env: {
+          API_KEY: "<!--# echo var='API_KEY' -->" 
+        }
+      };
+    </script>
+
+    <style>
+      /* Smooth scrolling for the whole page */
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background-color: #F9FAFB;
+        color: #3F4D58;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #F3F4F6;
+        border-radius: 5px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #D1D5DB;
+        border-radius: 5px;
+        border: 2px solid #F3F4F6;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #6BAE2E; /* Brand Green on hover */
+      }
+
+      /* Float Animation */
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+      }
+
+      /* =========================================
+         PRINT STYLES FOR PDF GENERATION
+         ========================================= */
+      @media print {
+        @page {
+          margin: 1cm;
+          size: A4;
+        }
+
+        /* 1. RESET LAYOUT & HIDE UI */
+        body {
+          background-color: white !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          overflow: visible !important;
+        }
+        
+        #root {
+          display: block !important;
+        }
+
+        /* Hide Sidebar, Buttons, Navigation, Scrollbars */
+        aside, 
+        button, 
+        .no-print,
+        a[href^="https://fonts.google.com"],
+        ::-webkit-scrollbar {
+          display: none !important;
+        }
+
+        /* 2. MAIN CONTAINER RESET */
+        main {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          margin-left: 0 !important;
+          overflow: visible !important;
+        }
+
+        /* 3. FORCE VISIBILITY OF ANIMATED ELEMENTS 
+           This fixes the "blank PDF" issue by overriding the initial animation states 
+        */
+        .opacity-0 { opacity: 1 !important; }
+        .translate-y-8 { transform: none !important; }
+        .scale-95 { transform: none !important; }
+        .blur-\[1px\] { filter: none !important; }
+        .will-change-transform { will-change: auto !important; }
+        
+        /* 4. LAYOUT FLOW & PAGE BREAKS */
+        
+        /* Sections */
+        section {
+          break-inside: avoid;
+          page-break-inside: avoid;
+          margin-bottom: 40px !important;
+          padding-top: 20px !important;
+          display: block !important;
+        }
+
+        /* Force Page Breaks before major sections */
+        section[id="logotipos"],
+        section[id="cores"],
+        section[id="guia-visual"],
+        section[id="tipografia"],
+        section[id="tom-de-voz"] {
+          break-before: page;
+          page-break-before: always;
+          margin-top: 0 !important;
+        }
+
+        /* Cards & Grids */
+        .grid {
+          display: grid !important;
+          break-inside: avoid;
+        }
+        
+        /* Prevent cards from splitting across pages */
+        .rounded-2xl, .rounded-xl, .rounded-3xl {
+          break-inside: avoid !important;
+          page-break-inside: avoid !important;
+          box-shadow: none !important;
+          border: 1px solid #e5e7eb !important;
+        }
+
+        /* Typography sizing for print */
+        h1 { font-size: 32pt !important; line-height: 1.2 !important; }
+        h2 { font-size: 24pt !important; margin-bottom: 20px !important; }
+        p { font-size: 11pt !important; color: #374151 !important; }
+
+        /* Color Cards Specific */
+        .h-32 { height: 80px !important; } /* Reduce height of color swatches to save space */
+        
+        /* Hide decorative elements that might clutter print */
+        .absolute.blur-3xl { display: none !important; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <!-- Babel configuration to handle imports -->
+    <script type="text/babel" data-type="module" src="./index.tsx"></script>
+  </body>
+</html>
