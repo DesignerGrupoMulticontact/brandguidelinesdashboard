@@ -30,24 +30,26 @@ import {
   MoveHorizontal,
   MoveVertical,
   ScanLine,
-  SquareCheck,
-  SquareX
+  CheckSquare,
+  XSquare
 } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import { ValueCard, ColorCard, LogoCard, ToneCard, GuidelineItem, AnimatedBlock } from './components/SectionComponents';
 import { NAV_ITEMS, BRAND_COLORS, SOCIAL_COLORS, VALUES, TONE_GUIDELINES } from './constants';
 
 // Brand Assets
-const LOGO_MAIN = "https://image2url.com/images/1765301476422-302b9290-a82f-4dc0-b2a3-51cc529af0c1.svg";
-const LOGO_SECONDARY = "https://image2url.com/images/1765301517215-c59b1a14-991e-49e3-af9d-86ca84953b0f.svg";
-const LOGO_ICON = "https://image2url.com/images/1765301553888-35bf09de-6a29-4cd4-8fed-43f61dfe30d1.svg";
+const LOGO_MAIN = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550612/logomain_kmecvg.svg";
+const LOGO_SECONDARY = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550637/logosecondary_f4umks.svg";
+const LOGO_ICON = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550639/icon_w77ygr.svg";
+const LOGO_MAIN_POS = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550635/logomainpositive_hydel8.svg";
+const LOGO_MAIN_NEG = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550634/logomainnegative_yfmnck.svg";
 
 // PNG Assets for Download
-const PNG_LOGO_MAIN = "https://i.postimg.cc/YjXmRqGS/logomain.png";
-const PNG_LOGO_SECONDARY = "https://i.postimg.cc/s1nZmDQJ/logosecondary.png";
-const PNG_LOGO_ICON = "https://i.postimg.cc/dDWT6tkK/icon.png";
-const PNG_LOGO_MAIN_POS = "https://i.postimg.cc/8syr4PJ6/logomainpositive.png";
-const PNG_LOGO_MAIN_NEG = "https://i.postimg.cc/MXsj5KMT/logomainnegative.png";
+const PNG_LOGO_MAIN = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550460/logomain_ic3pg3.png";
+const PNG_LOGO_SECONDARY = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550463/logosecondary_smpktk.png";
+const PNG_LOGO_ICON = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550441/icon_tdwuig.png";
+const PNG_LOGO_MAIN_POS = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550462/logomainpositive_qyozsd.png";
+const PNG_LOGO_MAIN_NEG = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550462/logomainnegative_facsbq.png";
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('apresentacao');
@@ -253,17 +255,19 @@ const App: React.FC = () => {
                 title="Versão Positiva" 
                 description="Uso a preto para impressões ou documentos oficiais." 
                 variant="mono"
-                imageUrl={LOGO_MAIN}
+                imageUrl={LOGO_MAIN_POS}
                 pngUrl={PNG_LOGO_MAIN_POS}
                 delay={300}
+                disableFilter={true}
               />
               <LogoCard 
                 title="Versão Negativa" 
                 description="Uso obrigatório em fundos escuros da marca ou fotografias escuras." 
                 variant="negative"
-                imageUrl={LOGO_MAIN}
+                imageUrl={LOGO_MAIN_NEG}
                 pngUrl={PNG_LOGO_MAIN_NEG}
                 delay={400}
+                disableFilter={true}
               />
              </div>
           </div>
@@ -367,7 +371,7 @@ const App: React.FC = () => {
                   {/* Correct: Dark Background */}
                   <div className="space-y-3 group">
                     <div className="w-full bg-brand-dark aspect-[4/3] rounded-xl border border-gray-100 flex items-center justify-center p-6 overflow-hidden">
-                       <img src={LOGO_MAIN} alt="Correct Dark Bg" loading="lazy" decoding="async" className="w-full h-auto brightness-0 invert grayscale transition-transform duration-700 group-hover:scale-105" />
+                       <img src={LOGO_MAIN_NEG} alt="Correct Dark Bg" loading="lazy" decoding="async" className="w-full h-auto transition-transform duration-700 group-hover:scale-105" />
                     </div>
                     <p className="font-secondary text-sm text-gray-500 leading-relaxed mt-2">Usar a versão negativa em fundos escuros.</p>
                   </div>
@@ -380,7 +384,7 @@ const App: React.FC = () => {
                        {/* Gradient Overlay - INCREASED CONTRAST WITH BRAND DARK */}
                        <div className="absolute inset-0 bg-gradient-to-t from-[#3F4D58]/90 to-transparent"></div>
                        {/* Logo (White Version for High Contrast) */}
-                       <img src={LOGO_MAIN} alt="High Contrast" loading="lazy" decoding="async" className="w-full h-auto relative z-10 brightness-0 invert grayscale" />
+                       <img src={LOGO_MAIN_NEG} alt="High Contrast" loading="lazy" decoding="async" className="w-full h-auto relative z-10" />
                     </div>
                     <p className="font-secondary text-sm text-gray-500 leading-relaxed mt-2">Utilizar degradês para aumentar o contraste entre a imagem de fundo e o logótipo.</p>
                   </div>
@@ -493,37 +497,37 @@ const App: React.FC = () => {
                 title: "Essência do Estilo",
                 desc: "Imagens que transmitem naturalidade, serenidade e qualidade premium. Cenários discretos, tecidos suaves e atmosfera limpa, reforçando a elegância minimalista da marca.",
                 icon: Sparkles,
-                image: "https://i.postimg.cc/VrBPNnz1/essenciadeestilo.png"
+                image: "https://res.cloudinary.com/dlmyres0i/image/upload/v1765551276/essenciadeestilo_vwoftx.png"
               },
               {
                 title: "Paleta e Iluminação",
                 desc: "Luz difusa e suave, tons quentes e neutros. Ambientes equilibrados com destaques visuais discretos. Fundos creme ou bege que reforçam conforto e bem-estar.",
                 icon: Sun,
-                image: "https://i.postimg.cc/MMbJGVqC/paleta.png"
+                image: "https://res.cloudinary.com/dlmyres0i/image/upload/v1765551276/paleta_p0eeqg.png"
               },
               {
                 title: "Composição de Produto",
                 desc: "Produtos inseridos em cenários premium, com materiais nobres como madeira clara ou pedra. Estética minimalista e foco total no packaging, sem elementos distrativos.",
                 icon: FlaskConical,
-                image: "https://i.postimg.cc/hzbRGTKR/composicaodeproduto.png"
+                image: "https://res.cloudinary.com/dlmyres0i/image/upload/v1765551274/composi%C3%A7%C3%A3odeproduto_r5ecdh.png"
               },
               {
                 title: "Representação Humana",
                 desc: "Mulheres reais entre 35 e 65 anos, com expressões naturais e postura descontraída. Representações autênticas que transmitem confiança e bem-estar.",
                 icon: Smile,
-                image: "https://i.postimg.cc/wyddH0Yz/representacaohumana.png"
+                image: "https://res.cloudinary.com/dlmyres0i/image/upload/v1765551277/representa%C3%A7aohumana_oyz420.png"
               },
               {
                 title: "Ambientes e Lifestyle",
                 desc: "Espaços interiores equilibrados, minimalistas e acolhedores. Materiais naturais, luz suave e harmonia visual que reforçam um estilo de vida calmo e consciente.",
                 icon: Armchair,
-                image: "https://i.postimg.cc/k6FP5K73/ambientes.png"
+                image: "https://res.cloudinary.com/dlmyres0i/image/upload/v1765551274/ambientes_getukt.png"
               },
               {
                 title: "Texturas Naturais",
                 desc: "Close-ups de pele, cabelo ou detalhes corporais com textura realista. Iluminação suave e aspeto natural, destacando vitalidade, cuidado e autenticidade.",
                 icon: Fingerprint,
-                image: "https://i.postimg.cc/Q9kZM1jx/texturasnaturais.png"
+                image: "https://res.cloudinary.com/dlmyres0i/image/upload/v1765551278/texturasnaturais_xil7er.png"
               }
             ].map((item, idx) => (
               <AnimatedBlock key={idx} delay={idx * 100} className={`bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-brand-green/30 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 group flex flex-col h-full`}>
@@ -765,7 +769,7 @@ const App: React.FC = () => {
             <AnimatedBlock className="bg-white p-8 rounded-2xl border border-brand-green/30 shadow-[0_4px_20px_rgba(107,174,46,0.05)] h-full">
               <div className="flex items-center gap-3 mb-8">
                 <div className="p-2 bg-brand-green/10 rounded-xl text-brand-green">
-                  <SquareCheck size={20} /> 
+                  <CheckSquare size={20} /> 
                 </div>
                 <h3 className="font-primary font-semibold text-xl text-brand-dark">Boas Práticas</h3>
               </div>
@@ -789,7 +793,7 @@ const App: React.FC = () => {
                 <ul className="space-y-3">
                   {TONE_GUIDELINES.dos.examples.map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
-                       <SquareCheck size={16} className="text-brand-green shrink-0 mt-0.5" />
+                       <CheckSquare size={16} className="text-brand-green shrink-0 mt-0.5" />
                       <span className="font-secondary text-sm text-gray-600 leading-relaxed italic">"{text}"</span>
                     </li>
                   ))}
@@ -801,7 +805,7 @@ const App: React.FC = () => {
             <AnimatedBlock delay={100} className="bg-white p-8 rounded-2xl border border-red-100 shadow-[0_4px_20px_rgba(239,68,68,0.05)] h-full">
                <div className="flex items-center gap-3 mb-8">
                 <div className="p-2 bg-red-50 rounded-xl text-red-500">
-                  <SquareX size={20} /> 
+                  <XSquare size={20} /> 
                 </div>
                 <h3 className="font-primary font-semibold text-xl text-brand-dark">Más Práticas</h3>
               </div>
@@ -825,7 +829,7 @@ const App: React.FC = () => {
                 <ul className="space-y-3">
                   {TONE_GUIDELINES.donts.examples.map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
-                       <SquareX size={16} className="text-red-500 shrink-0 mt-0.5" />
+                       <XSquare size={16} className="text-red-500 shrink-0 mt-0.5" />
                       <span className="font-secondary text-sm text-gray-600 leading-relaxed italic">"{text}"</span>
                     </li>
                   ))}
@@ -883,10 +887,14 @@ const App: React.FC = () => {
                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-green/20 rounded-full blur-3xl"></div>
                  
                  {/* Floating Container */}
-                 <div className="w-32 h-32 bg-white rounded-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-gray-50 flex items-center justify-center p-6 animate-float relative z-10">
+                 <button 
+                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                   className="w-32 h-32 bg-white rounded-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-gray-50 flex items-center justify-center p-6 animate-float relative z-10 cursor-pointer hover:scale-105 transition-transform duration-300"
+                   aria-label="Voltar ao topo"
+                 >
                    {/* Original Icon (No Filters) */}
                    <img src={LOGO_ICON} alt="MF Icon" className="w-full h-full object-contain drop-shadow-sm" />
-                 </div>
+                 </button>
               </div>
             </div>
           </AnimatedBlock>
@@ -895,6 +903,6 @@ const App: React.FC = () => {
       </main>
     </div>
   );
-};
+}
 
 export default App;

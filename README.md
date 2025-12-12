@@ -1,20 +1,51 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# MyFormula Brand Guidelines
 
-# Run and deploy your AI Studio app
+This is the official digital brand guidelines dashboard for MyFormula, built with Next.js and Tailwind CSS.
 
-This contains everything you need to run your app locally.
+## Getting Started
 
-View your app in AI Studio: https://ai.studio/apps/drive/13BbStwCMh0-OdlIxwZIkeBHZNj5wKKjV
+Follow these instructions to set up and run the project locally.
 
-## Run Locally
+### 1. Install Dependencies
 
-**Prerequisites:**  Node.js
+Install the required packages using npm:
 
+```bash
+npm install
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 2. Configure Environment Variables
+
+Create a `.env.local` file in the root directory of the project. You can copy the example file:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Open `.env.local` and add your Gemini API key:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+### 3. Run the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Deployment
+
+This project is configured for static export (`output: 'export'` in `next.config.js`).
+
+To build for production:
+
+```bash
+npm run build
+```
+
+The static assets will be generated in the `out` directory, ready for deployment on Netlify, Vercel, or any static hosting service.

@@ -26,6 +26,7 @@ export interface LogoPlaceholderProps {
   imageUrl?: string;
   pngUrl?: string;
   delay?: number;
+  disableFilter?: boolean;
 }
 
 export interface TypographySampleProps {

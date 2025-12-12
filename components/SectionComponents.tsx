@@ -1,8 +1,21 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { CheckCircle, XCircle, Download, Copy, Check } from 'lucide-react';
+import { CheckSquare, XSquare, Download, Copy, Check } from 'lucide-react';
 import { ColorDefinition, LogoPlaceholderProps, ValueCardProps, ToneCardProps } from '../types';
+
+// --- Image Optimization Helper ---
+export const optimizeCloudinaryUrl = (url: string, width: number = 800) => {
+  if (!url || !url.includes('cloudinary.com')) return url;
+  // Don't optimize/resize SVGs to preserve vector quality
+  if (url.endsWith('.svg')) return url;
+  
+  // Inject optimization params after /upload/
+  // f_auto: Auto format (WebP/AVIF)
+  // q_auto: Auto quality
+  // w_{width}: Resize to width
+  return url.replace('/upload/', `/upload/f_auto,q_auto,w_${width}/`);
+};
 
 // --- Animation Hook ---
 const useAppearOnScroll = (delay: number = 0) => {
@@ -57,15 +70,24 @@ export const ValueCard: React.FC<ValueCardProps> = ({ title, description, icon: 
   return (
     <div 
       ref={ref}
-      className={`bg-white p-6 lg:p-8 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100 hover:border-brand-green/40 hover:shadow-[0_8px_30px_rgba(107,174,46,0.1)] h-full group flex flex-col items-start ${getAnimationClasses(isVisible)}`}
+      className={`bg-white p-5 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100 hover:border-brand-green/40 hover:shadow-[0_8px_30px_rgba(107,174,46,0.1)] h-full w-full group flex flex-col items-start transition-all duration-300 ${getAnimationClasses(isVisible)}`}
     >
-      {Icon && (
-        <div className="p-3 bg-brand-green/10 rounded-xl text-brand-green mb-5 group-hover:bg-brand-green group-hover:text-white transition-colors duration-300">
-          <Icon size={24} strokeWidth={1.5} />
-        </div>
-      )}
-      <h3 className="font-primary font-semibold text-lg text-brand-dark mb-3">{title}</h3>
-      <p className="font-secondary text-sm text-gray-500 leading-relaxed">{description}</p>
+      <div className="flex flex-col w-full"> 
+          {/* Header: Icon + Title Side-by-Side for compactness */}
+          {/* Reduced padding, margin and icon size for tighter layout */}
+          <div className="flex items-center gap-3 mb-3 w-full">
+            {Icon && (
+              <div className="p-2 bg-brand-green/10 rounded-lg text-brand-green group-hover:bg-brand-green group-hover:text-white transition-colors duration-300 shrink-0">
+                <Icon size={18} strokeWidth={1.5} />
+              </div>
+            )}
+            <h3 className="font-primary font-semibold text-base text-brand-dark leading-tight flex-1 whitespace-nowrap">{title}</h3>
+          </div>
+          
+          <p className="font-secondary text-xs text-gray-500 leading-relaxed">
+            {description}
+          </p>
+      </div>
     </div>
   );
 };
@@ -116,9 +138,8 @@ export const ColorCard: React.FC<{ color: ColorDefinition; delay?: number }> = (
 };
 
 // --- Logo Placeholder ---
-export const LogoCard: React.FC<LogoPlaceholderProps> = ({ title, description, variant, imageUrl, pngUrl, delay = 0 }) => {
+export const LogoCard: React.FC<LogoPlaceholderProps> = ({ title, description, variant, imageUrl, pngUrl, delay = 0, disableFilter = false }) => {
   const { ref, isVisible } = useAppearOnScroll(delay);
-  const [isDownloading, setIsDownloading] = useState(false);
   
   let bgClass = 'bg-gray-50';
   let textClass = 'text-brand-dark';
@@ -129,42 +150,32 @@ export const LogoCard: React.FC<LogoPlaceholderProps> = ({ title, description, v
     bgClass = 'bg-brand-dark';
     textClass = 'text-white';
     borderClass = 'border-brand-dark';
-    imgFilterClass = 'brightness-0 invert grayscale'; // Force white
+    if (!disableFilter) imgFilterClass = 'brightness-0 invert grayscale'; // Force white only if not disabled
   } else if (variant === 'mono') {
-    imgFilterClass = 'brightness-0 grayscale'; // Force black
+    if (!disableFilter) imgFilterClass = 'brightness-0 grayscale'; // Force black only if not disabled
   }
 
-  // Handle Download Logic
-  const handleDownload = async (format: 'png' | 'svg') => {
-    const urlToDownload = format === 'png' ? pngUrl : imageUrl;
+  const handlePngDownload = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!pngUrl) return;
+    e.preventDefault();
     
-    if (!urlToDownload) {
-      alert("Ficheiro não disponível.");
-      return;
-    }
-
-    setIsDownloading(true);
-
     try {
-      const fileName = `myformula-${variant}.${format}`;
-
-      const response = await fetch(urlToDownload);
+      const response = await fetch(pngUrl);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = fileName;
+      // Sanitize title for filename
+      const safeTitle = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      link.download = `${safeTitle}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-      
     } catch (error) {
-      console.error("Download failed, fallback to direct link", error);
-      // Fallback: Open in new tab if direct blob download fails (e.g. strict CORS)
-      window.open(urlToDownload, '_blank');
-    } finally {
-      setIsDownloading(false);
+      console.error('Download failed:', error);
+      // Fallback
+      window.open(pngUrl, '_blank');
     }
   };
 
@@ -177,7 +188,7 @@ export const LogoCard: React.FC<LogoPlaceholderProps> = ({ title, description, v
         {/* Logo Image or Placeholder */}
         {imageUrl ? (
           <img 
-            src={imageUrl} 
+            src={optimizeCloudinaryUrl(imageUrl, 600)} // Optimize display image, ~600px width is enough for card
             alt={title} 
             loading="lazy"
             decoding="async"
@@ -202,22 +213,24 @@ export const LogoCard: React.FC<LogoPlaceholderProps> = ({ title, description, v
 
       {/* Download Buttons */}
       <div className="grid grid-cols-2 gap-3 mt-auto">
-        <button 
-          onClick={() => handleDownload('png')}
-          disabled={isDownloading || !pngUrl}
-          className="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-brand-green hover:bg-brand-green hover:text-white transition-all duration-300 group active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+        <a 
+          href={pngUrl}
+          onClick={handlePngDownload}
+          className={`flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-brand-green hover:bg-brand-green hover:text-white transition-all duration-300 group active:scale-[0.98] cursor-pointer ${!pngUrl ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`}
+          aria-disabled={!pngUrl}
         >
-          {isDownloading ? '...' : 'PNG'}
+          PNG
           <Download size={14} className="opacity-70 group-hover:opacity-100" />
-        </button>
-        <button 
-          onClick={() => handleDownload('svg')}
-          disabled={isDownloading || !imageUrl}
-          className="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-brand-green hover:bg-brand-green hover:text-white transition-all duration-300 group active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+        </a>
+        <a 
+          href={imageUrl}
+          download
+          className={`flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-brand-green hover:bg-brand-green hover:text-white transition-all duration-300 group active:scale-[0.98] ${!imageUrl ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`}
+          aria-disabled={!imageUrl}
         >
-          {isDownloading ? '...' : 'SVG'}
+          SVG
           <Download size={14} className="opacity-70 group-hover:opacity-100" />
-        </button>
+        </a>
       </div>
     </div>
   );
@@ -245,7 +258,7 @@ export const ToneCard: React.FC<ToneCardProps> = ({ title, description, icon: Ic
 
 // --- Do's and Don'ts Text Item ---
 export const GuidelineItem: React.FC<{ type: 'do' | 'dont'; text: string }> = ({ type, text }) => {
-  const Icon = type === 'do' ? CheckCircle : XCircle;
+  const Icon = type === 'do' ? CheckSquare : XSquare;
   const colorClass = type === 'do' ? 'text-brand-green' : 'text-red-500';
   const bgClass = type === 'do' ? 'bg-brand-green/5 border-brand-green/10' : 'bg-red-50 border-red-100';
 
