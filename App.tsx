@@ -44,12 +44,20 @@ const LOGO_ICON = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550639
 const LOGO_MAIN_POS = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550635/logomainpositive_hydel8.svg";
 const LOGO_MAIN_NEG = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550634/logomainnegative_yfmnck.svg";
 
+// New Secondary Monochrome Assets
+const LOGO_SEC_POS = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550636/logopositive_jwezdi.svg";
+const LOGO_SEC_NEG = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550638/logosecondarynegative_sf5wnd.svg";
+
 // PNG Assets for Download
 const PNG_LOGO_MAIN = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550460/logomain_ic3pg3.png";
 const PNG_LOGO_SECONDARY = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550463/logosecondary_smpktk.png";
 const PNG_LOGO_ICON = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550441/icon_tdwuig.png";
 const PNG_LOGO_MAIN_POS = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550462/logomainpositive_qyozsd.png";
 const PNG_LOGO_MAIN_NEG = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550462/logomainnegative_facsbq.png";
+
+// New Secondary Monochrome PNG Assets
+const PNG_LOGO_SEC_POS = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550462/logopositive_vbckox.png";
+const PNG_LOGO_SEC_NEG = "https://res.cloudinary.com/dlmyres0i/image/upload/v1765550465/logosecondarynegative_yeoep9.png";
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('apresentacao');
@@ -143,7 +151,7 @@ const App: React.FC = () => {
               </AnimatedBlock>
               
               <AnimatedBlock delay={100}>
-                <h1 className="font-primary font-bold text-4xl md:text-5xl lg:text-6xl text-brand-dark mb-8 leading-[1.1]">
+                <h1 className="font-primary font-bold text-4xl md:text-5xl lg:text-6xl text-brand-dark mb-8 leading-[1.1] hyphens-none">
                   Fórmulas Personalizadas<br className="hidden md:block" />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-[#426E4E]">
                     para o seu Bem-estar.
@@ -160,34 +168,34 @@ const App: React.FC = () => {
               {/* Mission & Vision - Refined (White/Green/Grey) */}
               <div className="grid md:grid-cols-2 gap-6 mb-16">
                 
-                {/* Missão */}
-                <AnimatedBlock delay={300} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm relative overflow-hidden group hover:border-brand-green/30 transition-colors duration-300">
-                  <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <Target size={120} className="text-brand-green" />
+                {/* Missão - HIGHLIGHTED */}
+                <AnimatedBlock delay={300} className="bg-brand-green p-8 rounded-2xl shadow-lg relative overflow-hidden group transition-transform duration-300 hover:-translate-y-1">
+                  <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Target size={120} className="text-white" />
                   </div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-3 bg-brand-green/10 text-brand-green rounded-xl group-hover:bg-brand-green group-hover:text-white transition-colors duration-300">
+                    <div className="p-3 bg-white text-brand-green rounded-xl shadow-sm">
                       <Target size={24} />
                     </div>
-                    <h3 className="font-primary text-xl font-semibold text-brand-dark">Missão</h3>
+                    <h3 className="font-primary text-xl font-semibold text-white">Missão</h3>
                   </div>
-                  <p className="font-secondary text-gray-600 leading-relaxed relative z-10">
+                  <p className="font-secondary text-white/90 leading-relaxed relative z-10">
                     Democratizar o acesso à saúde personalizada através de ciência, tecnologia e nutrição avançada, criando fórmulas verdadeiramente únicas para pessoas únicas. Cada corpo merece uma resposta feita à sua medida.
                   </p>
                 </AnimatedBlock>
 
-                {/* Visão */}
-                <AnimatedBlock delay={400} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm relative overflow-hidden group hover:border-brand-green/30 transition-colors duration-300">
-                   <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <Leaf size={120} className="text-brand-green" />
+                {/* Visão - HIGHLIGHTED */}
+                <AnimatedBlock delay={400} className="bg-brand-green p-8 rounded-2xl shadow-lg relative overflow-hidden group transition-transform duration-300 hover:-translate-y-1">
+                   <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Leaf size={120} className="text-white" />
                   </div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-3 bg-brand-green/10 text-brand-green rounded-xl group-hover:bg-brand-green group-hover:text-white transition-colors duration-300">
+                    <div className="p-3 bg-white text-brand-green rounded-xl shadow-sm">
                       <Leaf size={24} />
                     </div>
-                    <h3 className="font-primary text-xl font-semibold text-brand-dark">Visão</h3>
+                    <h3 className="font-primary text-xl font-semibold text-white">Visão</h3>
                   </div>
-                  <p className="font-secondary text-gray-600 leading-relaxed relative z-10">
+                  <p className="font-secondary text-white/90 leading-relaxed relative z-10">
                     Ser a referência internacional em suplementação personalizada, garantindo que cada pessoa encontra a sua fórmula ideal de bem-estar, desenvolvida com rigor, propósito e atenção ao que o corpo realmente precisa.
                   </p>
                 </AnimatedBlock>
@@ -216,7 +224,7 @@ const App: React.FC = () => {
             <h2 className="font-primary text-3xl font-bold text-brand-dark">Logótipos</h2>
           </div>
           
-          {/* Main Identity */}
+          {/* Main Identity - Removed duplicate "Logótipos" subtitle */}
           <div className="mb-16">
              <h3 className="font-primary text-xl font-semibold text-brand-dark mb-6">Identidade Principal</h3>
              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -270,6 +278,31 @@ const App: React.FC = () => {
                 disableFilter={true}
               />
              </div>
+
+             {/* Secondary Group - UPDATED WITH CORRECT ASSETS */}
+              <div className="mt-12">
+                <span className="inline-block px-3 py-1 bg-gray-100 text-gray-500 text-xs font-semibold rounded-full border border-gray-200 uppercase tracking-wide mb-6">
+                  Logótipo Secundário
+                </span>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <LogoCard 
+                    title="Versão Positiva" 
+                    description="Uso a preto para aplicações horizontais em documentos monocromáticos." 
+                    variant="mono"
+                    imageUrl={LOGO_SEC_POS}
+                    pngUrl={PNG_LOGO_SEC_POS}
+                    delay={500}
+                  />
+                  <LogoCard 
+                    title="Versão Negativa" 
+                    description="Uso horizontal obrigatório em fundos escuros." 
+                    variant="negative"
+                    imageUrl={LOGO_SEC_NEG}
+                    pngUrl={PNG_LOGO_SEC_NEG}
+                    delay={600}
+                  />
+                </div>
+              </div>
           </div>
 
           {/* Safe Zone Diagram */}
